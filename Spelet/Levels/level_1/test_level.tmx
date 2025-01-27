@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="40" height="24" tilewidth="32" tileheight="30" infinite="0" nextlayerid="3" nextobjectid="1">
+ <editorsettings>
+  <export target="test_level_2.tmx" format="tmx"/>
+ </editorsettings>
+ <tileset firstgid="1" source="../../Tiles/platforms.tsx"/>
+ <layer id="1" name="Platforms" width="40" height="24">
+  <data encoding="base64" compression="zlib">
+   eJzt1jENAAAIAzDwbxoF++AgaZMZYMeogl86BAA+u943m7kndbVxX38O3Bq5nAAe
+  </data>
+ </layer>
+</map>
