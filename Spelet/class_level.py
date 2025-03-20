@@ -1,8 +1,6 @@
-import pygame.sprite
-
-from Player_class import Player
-from Constants import *
-from Tile_class import Tiles
+from player_class import Player
+from constants import *
+from tile_class import Tiles
 
 
 class Level:
