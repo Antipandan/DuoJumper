@@ -1,7 +1,6 @@
 from class_level import Level
 from constants import *
 
-RUNNING = True
 pygame.init()
 screen = pygame.display.set_mode((screen_width, screen_height))
 clock = pygame.time.Clock()
@@ -20,6 +19,7 @@ def menu(top_text: str, middle_text="Play again", bottom="Quit"):
     button_2 = button_centered(bottom, screen_width / 2, 350)
     return [button_1, button_2]
 
+
 def reset_pos(player_group: pygame.sprite.Group):
     for player in player_group.sprites():
         player.x_pos, player.y_pos = start_pos[0], start_pos[1]
@@ -29,10 +29,10 @@ def reset_pos(player_group: pygame.sprite.Group):
 
 def button_centered(text: str, pos_x: int, pos_y: int, size=36, color="white"):
     title = render_text(text, size, color)
-    title_rect = title.get_rect()
-    title_rect.update(pos_x - title_rect.width / 2, pos_y, title_rect.width, title_rect.height)
-    screen.blit(title, (title_rect.x, title_rect.y))
-    return title_rect
+    title_rect_local = title.get_rect()
+    title_rect_local.update(pos_x - title_rect_local.width / 2, pos_y, title_rect_local.width, title_rect_local.height)
+    screen.blit(title, (title_rect_local.x, title_rect_local.y))
+    return title_rect_local
 
 
 def back_to_main_menu(pos_x, pos_y, size=36):
@@ -58,7 +58,7 @@ class RenderLevelIcon:
     def render_level_icon(self):
         level_1_image = pygame.image.load(self.image_path)
         level_1_image_rect = level_1_image.get_rect()
-        level_1_image_rect.update(self.offset_x, self.offset_y, level_1_image.width, level_1_image.height)
+        level_1_image_rect.update(self.offset_x, self.offset_y, level_1_image.get_width(), level_1_image.get_height())
 
         screen.blit(level_1_image, (level_1_image_rect.x, level_1_image_rect.y))
         pygame.draw.rect(screen, "white", level_1_image_rect, 1)
@@ -112,14 +112,19 @@ while RUNNING:
             screen.fill("black")
             render_level_only(screen, asset_path + "showcase_levels/" + chosen_map_path)
             map_select = button_centered("Select a map", screen_width / 2, 10, 60)
-            image_level_1 = RenderLevelIcon(58, 90, images_path + "map_img_2.jpg", "Wanderers Rest", level_path + "Level_1.tmx")
-            # 210 eftersom bilderna är 210 pixlar bredda kanske måste fixas men funkar nu
-            image_level_2 = RenderLevelIcon(148 + 210, 90, images_path + "map_img_4.jpg", "Floating point",
-                                            level_path + "Level_2.tmx")
+            # nivå 1
+            image_level_1 = RenderLevelIcon(standard_offset_x, standard_offset_y, images_path + "map_img_2.jpg",
+                                            "Wanderers Rest", level_path + "level_1.tmx")
+            # nivå 2
+            image_level_2 = RenderLevelIcon(standard_offset_x + space_in_between + standard_image_width, 90
+            , images_path + "map_img_4.jpg", "Floating point",level_path + "level_2.tmx")
             # Började att använda mig av JPG så att jag inte skulle få röda varningar?? De orsakade inga problem men
             # de var inte trevliga att ha. Dessutom blir det lite lättare att läsa text nu
-            image_level_3 = RenderLevelIcon(148 + (90 * 3) + 210, 90, images_path + "map_img_5.jpg", "Hip Hop Hill",
-                                            level_path + "Level_3.tmx")
+            # nivå 3
+            image_level_3 = RenderLevelIcon(standard_offset_x + space_in_between * 2 + standard_image_width * 2,
+                                            standard_offset_y, images_path + "map_img_5.jpg", "Hip Hop Hill",
+                                            level_path + "level_3.tmx")
+            #
             maps = [image_level_1, image_level_2, image_level_3]
             main_rect = back_to_main_menu(0, 0, 45)
             for iter_map in maps:

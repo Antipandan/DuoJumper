@@ -15,18 +15,23 @@ amount = 30
 jump_strength = 750
 resistance_in_air = 0.5
 max_speed_air = 450
-switch_delay = 30
+max_speed_grounded = 1200
 RUNNING = True
+standard_offset_x = 50
+standard_offset_y = 90
+space_in_between = 90
+standard_image_width = 210
+# detta värde används ej
+standard_image_height = 120
 
-radius = 20
 acceleration = amount
 delta_time = 16.67 / 1000
 start_pos = pygame.Vector2(screen_width / 2, 10)
 
-asset_path = "Assets/"
-level_path = asset_path + "Levels/"
-player_character = asset_path + "Player_sprites/Player 1.png"
-bg_path = asset_path + "showcase_levels/Main Menu Level.tmx"
+asset_path = "assets/"
+level_path = asset_path + "levels/"
+player_character = asset_path + "player_sprites/Player.png"
+bg_path = asset_path + "showcase_levels/main_menu_level.tmx"
 images_path = asset_path + "Level_pics/"
 all_maps = os.listdir("Assets/showcase_levels/")
 chosen_map_path = random.choice(all_maps)

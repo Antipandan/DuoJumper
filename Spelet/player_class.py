@@ -5,14 +5,11 @@ class Player(pygame.sprite.Sprite):
     def __init__(self, x_pos: float, y_pos: float, movement_keys: list, class_id: int):
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.image.load(player_character)
-        # TODO lägg till system för att hantera olika input ex WASD, pil
         self.x_speed = 0
         self.y_speed = 0
         self.x_pos = x_pos
         self.y_pos = y_pos
         self.movement_keys = movement_keys
-        # orkar inte att lägga den variabel i constants
-        self.max_speed_grounded = 1200
         self.player_pos = [self.x_pos, self.y_pos]
         self.rect = self.image.get_rect()
         self.length_x = self.rect.width
@@ -30,14 +27,13 @@ class Player(pygame.sprite.Sprite):
                                                  self.length_y + 1)
         self.alive = True
         self.class_id = class_id
-        #self.__owned_tiles = []
 
     def gravity(self):
         if self.falling:
-            if self.y_speed <= self.max_speed_grounded:
+            if self.y_speed <= max_speed_grounded:
                 self.y_speed += gravity
             else:
-                self.y_speed = self.max_speed_grounded
+                self.y_speed = max_speed_grounded
 
     def friction(self):
         if abs(self.x_speed) > 25:
@@ -46,8 +42,6 @@ class Player(pygame.sprite.Sprite):
             self.x_speed = 0
 
     def collision_with_platforms(self, tiles):
-        # har ej hittat ett smidigt sätt för att sätta falling = True än Jag vill implementera ett sätt för att kolla
-        # bara de tiles som spelaren faktiskt kolliderar med och inte kolla alla! Det är dåligt men det fungerar nu
         self.falling = True
         # Det här är ineffektivt men det får vara så här.
         for tile in tiles:
@@ -106,8 +100,8 @@ class Player(pygame.sprite.Sprite):
                 self.x_speed -= acceleration
             if pressed_keys[self.movement_keys[3]]:
                 self.x_speed += acceleration
-            if self.x_speed >= self.max_speed_grounded:
-                self.x_speed = self.max_speed_grounded
+            if self.x_speed >= max_speed_grounded:
+                self.x_speed = max_speed_grounded
 
         self.x_pos += self.x_speed * delta_time
         self.y_pos += self.y_speed * delta_time
