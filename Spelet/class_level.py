@@ -1,8 +1,5 @@
-import pygame.sprite
-
-from Player_class import Player
-from Constants import *
-from Tile_class import Tiles
+from player_class import Player
+from constants import *
 
 
 class Level:
@@ -14,7 +11,6 @@ class Level:
         self.props_layer = self.level.get_layer_by_name("Props")
         self.fill_layer = self.level.get_layer_by_name("Fill Platforms")
         # grupper
-        # TODO ska ha flera spelare kanske behöver group
         self.player_group = pygame.sprite.Group()
         self.platform_group = pygame.sprite.Group()
         self.rest_tiles = pygame.sprite.Group()
@@ -52,10 +48,8 @@ class Level:
         self.player_group.update(self.platform_group)
 
     def draw(self):
-        # ritar klasser
         self.screen.fill("black")
-
-        # pygame.draw.rect(self.screen, "red", self.player_1.rect, 2)
+        # ritar alla klass instanser i dessa groups
         self.prop_group.draw(self.screen)
         self.player_group.draw(self.screen)
         self.rest_tiles.draw(self.screen)
