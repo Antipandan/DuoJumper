@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="40" height="24" tilewidth="32" tileheight="30" infinite="0" nextlayerid="3" nextobjectid="1">
  <tileset firstgid="1" name="TX Tileset Ground" tilewidth="32" tileheight="30" tilecount="272" columns="16">
-  <image source="../Tiles/TX Tileset Ground.png" width="512" height="512"/>
+  <image source="../tiles/TX Tileset Ground.png" width="512" height="512"/>
  </tileset>
  <tileset firstgid="273" name="TX Village Props" tilewidth="32" tileheight="30" tilecount="1088" columns="32">
-  <image source="../Tiles/TX Village Props.png" width="1024" height="1024"/>
+  <image source="../tiles/TX Village Props.png" width="1024" height="1024"/>
  </tileset>
  <layer id="1" name="Platforms" width="40" height="24">
   <data encoding="csv">
