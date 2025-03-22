@@ -30,10 +30,10 @@ start_pos = pygame.Vector2(screen_width / 2, 10)
 
 asset_path = "assets/"
 level_path = asset_path + "levels/"
-player_character = asset_path + "player_sprites/Player.png"
+player_character = asset_path + "player_sprites/player.png"
 bg_path = asset_path + "showcase_levels/main_menu_level.tmx"
-images_path = asset_path + "Level_pics/"
-all_maps = os.listdir("Assets/showcase_levels/")
+images_path = asset_path + "level_pics/"
+all_maps = os.listdir(asset_path + "showcase_levels")
 chosen_map_path = random.choice(all_maps)
 
 

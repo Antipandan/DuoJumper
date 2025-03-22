@@ -59,7 +59,7 @@ class Player(pygame.sprite.Sprite):
                 if tile.rect.colliderect(self.collision_rect_x):
                     if self.x_speed < 0:
                         self.x_speed = 0
-                        # Jag vet inte varför + 33 pixlar fungerar men den gör det så...
+                        # Jag vet inte varför + 33 pixlar fungerar gör det så...
                         self.x_pos = tile.pos[0] + self.length_x / 2 + tile_size_x + 1
                     elif self.x_speed > 0:
                         self.x_pos = tile.pos[0] - self.length_x / 2
