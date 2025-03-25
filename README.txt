@@ -7,6 +7,6 @@ Requirements:
 Swe/Sv
 Krav
   Python 3.11 eller senare (äldre versioner kan fungera)
-  pygame 2.5.2 eller senare (äldre versioner kan fungera. Alternativ Pygame-ce version 2.5.2 eller senare)
+  Pygame 2.5.2 eller senare (äldre versioner kan fungera. Alternativ Pygame-ce version 2.5.2 eller senare)
   Pytmx
   
