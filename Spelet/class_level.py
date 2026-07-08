@@ -2,32 +2,31 @@ from pygame.surface import Surface
 from player_class import Player
 from constants import *
 
-
 class Level:
     def __init__(self, screen, level) -> None:
-        self.screen : Surface = screen
+        self.screen: Surface = screen
         # ladda nivå
-        self.level : TiledMap = pytmx.load_pygame(level)
-        self.platform_layer : int = self.level.get_layer_by_name('Platforms')
-        self.props_layer : int = self.level.get_layer_by_name("Props")
-        self.fill_layer : int = self.level.get_layer_by_name("Fill Platforms")
+        self.level: TiledMap = pytmx.load_pygame(level)
+        self.platform_layer: int = self.level.get_layer_by_name('Platforms')
+        self.props_layer: int = self.level.get_layer_by_name("Props")
+        self.fill_layer: int = self.level.get_layer_by_name("Fill Platforms")
         # grupper
 
-        self.player_group : Group = pygame.sprite.Group()
-        self.platform_group : Group = pygame.sprite.Group()
-        self.rest_tiles : Group = pygame.sprite.Group()
-        self.prop_group : Group = pygame.sprite.Group()
+        self.player_group: Group = pygame.sprite.Group()
+        self.platform_group: Group = pygame.sprite.Group()
+        self.rest_tiles: Group = pygame.sprite.Group()
+        self.prop_group: Group = pygame.sprite.Group()
         # Ange vilka knappar som en instans av en spelar klassen kan ha. Definerar det här så att
         # spelar klass koden inte fylls med fler if satser
-        self.player_1_input_method : list[int] = [
-            pygame.K_w, pygame.K_a, pygame.K_s,pygame.K_d, pygame.K_SPACE]
+        self.player_1_input_method: list[int] = [
+            pygame.K_w, pygame.K_a, pygame.K_s, pygame.K_d, pygame.K_SPACE]
 
-        self.player_2_input_metod : list[int] = [
-            pygame.K_UP, pygame.K_LEFT,pygame.K_DOWN, pygame.K_RIGHT]
+        self.player_2_input_metod: list[int] = [
+            pygame.K_UP, pygame.K_LEFT, pygame.K_DOWN, pygame.K_RIGHT]
 
         # skapa instanser lägg till i grupp
-        self.player_1 : Player = Player(start_pos[0], start_pos[1], self.player_1_input_method)
-        self.player_2 : Player = Player(start_pos[0], start_pos[1], self.player_2_input_metod)
+        self.player_1: Player = Player(start_pos[0], start_pos[1], self.player_1_input_method)
+        self.player_2: Player = Player(start_pos[0], start_pos[1], self.player_2_input_metod)
         # lägg till spelare 2 först så att spelare 1 är ritad över spelare 2
         self.player_group.add(self.player_2)
         self.player_group.add(self.player_1)
@@ -42,10 +41,10 @@ class Level:
             self.rest_tiles.add(fill)
 
     @staticmethod
-    def make_tiles(layer : int) -> list[Tiles]:
-        created_tiles : list[Tiles] = []
+    def make_tiles(layer: int) -> list[Tiles]:
+        created_tiles: list[Tiles] = []
         for x, y, tileSurface in layer.tiles():
-            tile = Tiles((x * tile_size_x, y * tile_size_y), tileSurface)
+            tile: Tiles = Tiles(Vector2(x * tile_size_x, y * tile_size_y), tileSurface)
             created_tiles.append(tile)
         return created_tiles
 

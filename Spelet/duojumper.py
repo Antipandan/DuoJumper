@@ -48,13 +48,12 @@ def back_to_main_menu(pos_x: int, pos_y: int, size: int = 36) -> Rect:
     return main_menu_rect
 
 
-def mouse_click_button(button_rect: pygame.Rect, mouse_position: tuple[int, int], mouse: tuple[int, int]) -> bool | int:
+def mouse_click_button(button_rect: pygame.Rect, mouse_position: tuple[int, int], mouse: tuple[bool, bool, bool]) -> bool | int:
     return button_rect.collidepoint(mouse_position[0], mouse_position[1]) and mouse[0]
 
 
 class RenderLevelIcon:
-    def __init__(self, offset_x: int, offset_y: int, image_path: str, map_name: str = "Placeholder",
-                 map_location="") -> None:
+    def __init__(self, offset_x: int, offset_y: int, image_path: str, map_name: str = "Placeholder",map_location="") -> None:
         self.offset_x: int = offset_x
         self.offset_y: int = offset_y
         self.image_path: str = image_path

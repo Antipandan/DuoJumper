@@ -77,7 +77,7 @@ class Player(pygame.sprite.Sprite):
         else:
             self.alive = True
 
-    def movement(self):
+    def movement(self) -> None:
         pressed_keys: ScancodeWrapper = pygame.key.get_pressed()
         if self.falling:
             # movement keys finns här eftersom det är en index tagen från en ett indexerat värde
@@ -106,16 +106,16 @@ class Player(pygame.sprite.Sprite):
         self.x_pos += self.x_speed * delta_time
         self.y_pos += self.y_speed * delta_time
         # Uppdatera collisions rects här med center
-        self.collision_rect_y.center = (self.x_pos, self.y_pos + self.y_speed * delta_time)
-        self.collision_rect_x.center = (self.x_pos + self.x_speed * delta_time, self.y_pos)
-        self.rect.center = (self.x_pos, self.y_pos)
+        self.collision_rect_y.center = (int(self.x_pos), int(self.y_pos + self.y_speed * delta_time))
+        self.collision_rect_x.center = (int(self.x_pos + self.x_speed * delta_time), int(self.y_pos))
+        self.rect.center = (int(self.x_pos), int(self.y_pos))
 
-    def update(self, tiles):
+    def update(self, tiles) -> None:
         self.movement()
         self.gravity()
         self.collision_with_platforms(tiles)
         self.collision_with_viewport()
 
-    def __str__(self):
+    def __str__(self) -> str:
         return "xpos: {}, y_pos: {}\n\nx_speed: {}, y_speed: {}".format(self.x_pos, self.y_pos,
                                                                         self.x_speed, self.x_speed)
