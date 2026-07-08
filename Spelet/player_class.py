@@ -1,46 +1,47 @@
+from pygame.key import ScancodeWrapper
 from pygame.surface import Surface
 from pygame.rect import Rect
 from constants import *
 
 
 class Player(pygame.sprite.Sprite):
-    def __init__(self, x_pos: float | int, y_pos: float | int, movement_keys: list[int]):
+    def __init__(self, x_pos: float | int, y_pos: float | int, movement_keys: list[int]) -> None:
         pygame.sprite.Sprite.__init__(self)
-        self.image : Surface = pygame.image.load(player_character)
-        self.x_speed : float| int = 0
-        self.y_speed : float | int = 0
-        self.x_pos : float | int = x_pos
-        self.y_pos : float | int = y_pos
-        self.movement_keys : list[int] = movement_keys
-        self.player_pos : list[float | int] = [self.x_pos, self.y_pos]
-        self.rect : Rect = self.image.get_rect()
-        self.length_x : float | int= self.rect.width
-        self.length_y : float | int = self.rect.height
-        self.falling : bool = True
-        self.delta_speed_x : float | int = self.x_speed * delta_time
-        self.collision_rect_x : Rect = pygame.rect.Rect(
-            self.x_pos - self.length_x / 2 + self.delta_speed_x,self.y_pos - self.length_y / 2,
-            self.length_x + 1,self.length_y)
-        self.delta_speed_y = self.y_speed * delta_time
-        self.collision_rect_y = pygame.rect.Rect(
-            self.x_pos - self.length_x / 2,self.y_pos - self.length_y / 2 + self.delta_speed_y,
-            self.length_x,self.length_y + 1)
-        self.alive : bool = True
+        self.image: Surface = pygame.image.load(player_character)
+        self.x_speed: float | int = 0
+        self.y_speed: float | int = 0
+        self.x_pos: float | int = x_pos
+        self.y_pos: float | int = y_pos
+        self.movement_keys: list[int] = movement_keys
+        self.player_pos: list[float | int] = [self.x_pos, self.y_pos]
+        self.rect: Rect = self.image.get_rect()
+        self.length_x: float | int = self.rect.width
+        self.length_y: float | int = self.rect.height
+        self.falling: bool = True
+        self.delta_speed_x: float | int = self.x_speed * delta_time
+        self.collision_rect_x: Rect = pygame.rect.Rect(
+            self.x_pos - self.length_x / 2 + self.delta_speed_x, self.y_pos - self.length_y / 2,
+            self.length_x + 1, self.length_y)
+        self.delta_speed_y: float | int = self.y_speed * delta_time
+        self.collision_rect_y: Rect = pygame.rect.Rect(
+            self.x_pos - self.length_x / 2, self.y_pos - self.length_y / 2 + self.delta_speed_y,
+            self.length_x, self.length_y + 1)
+        self.alive: bool = True
 
-    def gravity(self):
+    def gravity(self) -> None:
         if self.falling:
             if self.y_speed <= max_speed_grounded:
                 self.y_speed += gravity
             else:
                 self.y_speed = max_speed_grounded
 
-    def friction(self):
+    def friction(self) -> None:
         if abs(self.x_speed) > 25:
             self.x_speed *= friction
         else:
             self.x_speed = 0
 
-    def collision_with_platforms(self, tiles):
+    def collision_with_platforms(self, tiles) -> None:
         self.falling = True
         # Det här är ineffektivt men det får vara så här.
         for tile in tiles:
@@ -55,7 +56,6 @@ class Player(pygame.sprite.Sprite):
                         self.y_pos = tile.pos[1] - self.length_y / 2
                         self.falling = False
                         tile.owner = self
-                        tile.change_owner(self)
                 if tile.rect.colliderect(self.collision_rect_x):
                     if self.x_speed < 0:
                         self.x_speed = 0
@@ -65,7 +65,7 @@ class Player(pygame.sprite.Sprite):
                         self.x_pos = tile.pos[0] - self.length_x / 2
                         self.x_speed = 0
 
-    def collision_with_viewport(self):
+    def collision_with_viewport(self) -> None:
         if self.x_pos <= 0 - self.length_x / 2 or self.x_pos >= screen_width + self.length_x / 2:
             self.x_pos = screen_width / 2
             self.x_speed *= 0.8
@@ -78,7 +78,7 @@ class Player(pygame.sprite.Sprite):
             self.alive = True
 
     def movement(self):
-        pressed_keys = pygame.key.get_pressed()
+        pressed_keys: ScancodeWrapper = pygame.key.get_pressed()
         if self.falling:
             # movement keys finns här eftersom det är en index tagen från en ett indexerat värde
             # eg self.movent_keys[2] istället för pygame.K_s i detta fall
