@@ -20,11 +20,11 @@ class Player(pygame.sprite.Sprite):
         self.falling: bool = True
         self.delta_speed_x: float | int = self.x_speed * delta_time
         self.collision_rect_x: Rect = pygame.rect.Rect(
-            self.x_pos - self.length_x / 2 + self.delta_speed_x, self.y_pos - self.length_y / 2,
+            self.x_pos - self.length_x / 2.0 + self.delta_speed_x, self.y_pos - self.length_y / 2.0,
             self.length_x + 1, self.length_y)
         self.delta_speed_y: float | int = self.y_speed * delta_time
         self.collision_rect_y: Rect = pygame.rect.Rect(
-            self.x_pos - self.length_x / 2, self.y_pos - self.length_y / 2 + self.delta_speed_y,
+            self.x_pos - self.length_x / 2.0, self.y_pos - self.length_y / 2.0 + self.delta_speed_y,
             self.length_x, self.length_y + 1)
         self.alive: bool = True
 
@@ -48,28 +48,28 @@ class Player(pygame.sprite.Sprite):
             if tile.owner == self or tile.owner is None:
                 if tile.rect.colliderect(self.collision_rect_y):
                     if self.y_speed < 0:
-                        self.y_pos = tile.pos[1] + tile_size_y + self.length_y / 2 + 1
+                        self.y_pos = tile.pos[1] + tile_size_y + self.length_y / 2.0 + 1
                         self.y_speed = -1
                     elif self.y_speed >= 0:
                         self.friction()
                         self.y_speed = 0
-                        self.y_pos = tile.pos[1] - self.length_y / 2
+                        self.y_pos = tile.pos[1] - self.length_y / 2.0
                         self.falling = False
                         tile.owner = self
                 if tile.rect.colliderect(self.collision_rect_x):
                     if self.x_speed < 0:
                         self.x_speed = 0
                         # Jag vet inte varför + 33 pixlar fungerar gör det så...
-                        self.x_pos = tile.pos[0] + self.length_x / 2 + tile_size_x + 1
+                        self.x_pos = tile.pos[0] + self.length_x / 2.0 + tile_size_x + 1
                     elif self.x_speed > 0:
-                        self.x_pos = tile.pos[0] - self.length_x / 2
+                        self.x_pos = tile.pos[0] - self.length_x / 2.0
                         self.x_speed = 0
 
     def collision_with_viewport(self) -> None:
-        if self.x_pos <= 0 - self.length_x / 2 or self.x_pos >= screen_width + self.length_x / 2:
-            self.x_pos = screen_width / 2
+        if self.x_pos <= 0 - self.length_x / 2.0 or self.x_pos >= screen_width + self.length_x / 2.0:
+            self.x_pos = screen_width / 2.0
             self.x_speed *= 0.8
-        if self.y_pos <= 0 - self.length_y / 2:
+        if self.y_pos <= 0 - self.length_y / 2.0:
             self.y_pos = 0
         if self.y_pos >= screen_height + self.length_y / 2:
             self.y_pos = 0
