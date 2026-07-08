@@ -1,32 +1,31 @@
+from pygame.surface import Surface
+from pygame.rect import Rect
 from constants import *
 
 
 class Player(pygame.sprite.Sprite):
-    def __init__(self, x_pos: float, y_pos: float, movement_keys: list, class_id: int):
+    def __init__(self, x_pos: float | int, y_pos: float | int, movement_keys: list[int]):
         pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.image.load(player_character)
-        self.x_speed = 0
-        self.y_speed = 0
-        self.x_pos = x_pos
-        self.y_pos = y_pos
-        self.movement_keys = movement_keys
-        self.player_pos = [self.x_pos, self.y_pos]
-        self.rect = self.image.get_rect()
-        self.length_x = self.rect.width
-        self.length_y = self.rect.height
-        self.falling = True
-        self.delta_speed_x = self.x_speed * delta_time
-        self.collision_rect_x = pygame.rect.Rect(self.x_pos - self.length_x / 2 + self.delta_speed_x,
-                                                 self.y_pos - self.length_y / 2,
-                                                 self.length_x + 1,
-                                                 self.length_y)
+        self.image : Surface = pygame.image.load(player_character)
+        self.x_speed : float| int = 0
+        self.y_speed : float | int = 0
+        self.x_pos : float | int = x_pos
+        self.y_pos : float | int = y_pos
+        self.movement_keys : list[int] = movement_keys
+        self.player_pos : list[float | int] = [self.x_pos, self.y_pos]
+        self.rect : Rect = self.image.get_rect()
+        self.length_x : float | int= self.rect.width
+        self.length_y : float | int = self.rect.height
+        self.falling : bool = True
+        self.delta_speed_x : float | int = self.x_speed * delta_time
+        self.collision_rect_x : Rect = pygame.rect.Rect(
+            self.x_pos - self.length_x / 2 + self.delta_speed_x,self.y_pos - self.length_y / 2,
+            self.length_x + 1,self.length_y)
         self.delta_speed_y = self.y_speed * delta_time
-        self.collision_rect_y = pygame.rect.Rect(self.x_pos - self.length_x / 2,
-                                                 self.y_pos - self.length_y / 2 + self.delta_speed_y,
-                                                 self.length_x,
-                                                 self.length_y + 1)
-        self.alive = True
-        self.class_id = class_id
+        self.collision_rect_y = pygame.rect.Rect(
+            self.x_pos - self.length_x / 2,self.y_pos - self.length_y / 2 + self.delta_speed_y,
+            self.length_x,self.length_y + 1)
+        self.alive : bool = True
 
     def gravity(self):
         if self.falling:
@@ -45,7 +44,7 @@ class Player(pygame.sprite.Sprite):
         self.falling = True
         # Det här är ineffektivt men det får vara så här.
         for tile in tiles:
-            if tile.owner == "Player_{}".format(self.class_id) or tile.owner == None:
+            if tile.owner == self or tile.owner is None:
                 if tile.rect.colliderect(self.collision_rect_y):
                     if self.y_speed < 0:
                         self.y_pos = tile.pos[1] + tile_size_y + self.length_y / 2 + 1
@@ -55,7 +54,8 @@ class Player(pygame.sprite.Sprite):
                         self.y_speed = 0
                         self.y_pos = tile.pos[1] - self.length_y / 2
                         self.falling = False
-                        tile.change_owner("Player_{}".format(self.class_id))
+                        tile.owner = self
+                        tile.change_owner(self)
                 if tile.rect.colliderect(self.collision_rect_x):
                     if self.x_speed < 0:
                         self.x_speed = 0

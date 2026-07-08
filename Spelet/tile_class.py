@@ -1,5 +1,7 @@
-from constants import pygame
+import builtins
 
+from DuoJumper.Spelet.player_class import Player
+from constants import pygame
 
 class Tiles(pygame.sprite.Sprite):
     def __init__(self, pos, surface):
@@ -7,8 +9,10 @@ class Tiles(pygame.sprite.Sprite):
         self.pos = pos
         self.image = surface
         self.rect = self.image.get_rect(topleft=self.pos)
-        self.owner = None
+        self.owner : Player = None
 
     def change_owner(self, new_owner):
         if self.owner is None:
             self.owner = new_owner
+
+
